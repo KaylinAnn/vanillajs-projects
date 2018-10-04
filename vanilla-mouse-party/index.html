@@ -55,10 +55,43 @@
     <div id="wrap">
         <h1>Party Time!</h1>
     </div>
+
+    <script>
+
+
+        const mousePosition = { x: 0, y: 0 };
+        let drawId
+        const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min + 1)) + min;
+        window.addEventListener('mousemove', function (event) {
+            mousePosition.x = event.pageX
+            mousePosition.y = event.pageY
+
+        })
+        function draw() {
+            return setInterval(() => {
+                const wrap = document.getElementById('wrap')
+                const color = `background:rgb(${getRandomNumber(0, 255)},${getRandomNumber(0, 255)}, ${getRandomNumber(0, 255)});`;
+                const ballSize = getRandomNumber(50, 60);
+                const size = `height:${ballSize}px; width:${ballSize}px;`;
+                const left = `left:${getRandomNumber(mousePosition.x - ballSize, mousePosition.x)}px;`;
+                const top = `top:${getRandomNumber(mousePosition.y - ballSize, mousePosition.y)}px; `;
+                const style = `${left}${top}${color}${size}`;
+                const newBall = document.createElement('div')
+                newBall.classList.add('ball')
+                newBall.style = style
+                wrap.appendChild(newBall)
+                newBall.addEventListener('animationend', function () {
+                    this.remove();
+                })
+            }, 20)
+
+
+        }
+        window.addEventListener('mouseover', () => drawId = draw())
+        window.addEventListener('mouseout', () => clearInterval(drawId))
+
+    </script>
+
 </body>
-
-<script>
-
-</script>
 
 </html>
